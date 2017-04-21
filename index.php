@@ -46,8 +46,8 @@
 	<h2>exercice 4</h2>
 	<ul>
 		<?php 
-		foreach ($bdh->query('SELECT * FROM clients AS C, cards AS A WHERE C.cardNumber = A.cardNumber AND A.cardTypesId = 1') as $r) {
-			echo $r['lastName'] . " " . $r['firstName'] . "<br />";
+		foreach ($bdh->query('SELECT * FROM clients AS client, cards AS card WHERE client.cardNumber = card.cardNumber AND card.cardTypesId = 1') as $r) {
+			echo "<li>" . $r['lastName'] . " " . $r['firstName'] . "</li>";
 		}
 		?>
 	</ul>
@@ -57,6 +57,29 @@
 		<?php 
 		foreach($bdh->query('SELECT * FROM clients WHERE lastName LIKE "M%" ORDER BY lastName ASC') as $row){
 			echo "<li> Nom :" . $row['lastName'] . '<br> Prénom :' . $row['firstName'] . '</li>';
+		}
+		?>
+	</ul>
+
+	<h2>exercice 6</h2>
+	<ul>
+		<?php 
+		foreach ($bdh->query('SELECT title, performer, date, startTime FROM shows ORDER BY title ASC') as $r) {
+			echo "<li>" . $r['title'] . " par " . $r['performer'] . ", le " . $r['date'] . " à " . $r['startTime'] . "</li>";
+		}
+		?>
+	</ul>
+
+	<h2>exercice 7</h2>
+	<ul>
+		<?php 
+		foreach ($bdh->query('SELECT * FROM clients LEFT OUTER JOIN cards ON clients.cardNumber = cards.cardNumber') as $r) {
+			echo '<li>Nom :' . $r['lastName'] .  '<br /> Prénom :' . $r['firstName'] .  '<br /> Date de naissance :' . $r['birthDate'] . "<br /> Carte de fidélité: ";
+			if($r['card']){
+				echo 'Numéro de carte :' . $r['cardNumber'] . "</li>";
+			}else{
+				echo "Pas de carte" . "</li>";
+			}
 		}
 		?>
 	</ul>
